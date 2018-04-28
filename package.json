@@ -1,0 +1,57 @@
+{
+  "name": "aor-apollo-client",
+  "version": "1.0.0",
+  "description": "Apollo client builder for AOR (Admin On Rest)",
+  "license": "MIT",
+  "author": "Evan Corl",
+  "contributors": [
+    "Evan Corl <evancorl@yahoo.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/evancorl/aor-apollo-client"
+  },
+  "homepage": "https://github.com/evancorl/aor-apollo-client#readme",
+  "bugs": {
+    "url": "https://github.com/evancorl/aor-apollo-client/issues"
+  },
+  "keywords": [
+    "admin",
+    "admin-on-rest",
+    "apollo",
+    "graphql"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "lint": "tslint -c tslint.json -p tsconfig.json",
+    "build": "rm -rf dist/; tsc",
+    "prepublishOnly": "yarn run build"
+  },
+  "dependencies": {
+    "graphql": "0.13.0",
+    "graphql-tag": "^2.8.0",
+    "lodash.camelcase": "^4.3.0",
+    "lodash.clonedeep": "^4.5.0",
+    "lodash.defaultsdeep": "^4.6.0",
+    "lodash.omit": "^4.5.0",
+    "lodash.pick": "^4.4.0",
+    "lodash.upperfirst": "^4.3.1",
+    "pluralize": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^22.2.2",
+    "@types/lodash.camelcase": "^4.3.3",
+    "@types/lodash.clonedeep": "^4.5.3",
+    "@types/lodash.defaultsdeep": "^4.6.3",
+    "@types/lodash.omit": "^4.5.3",
+    "@types/lodash.pick": "^4.4.3",
+    "@types/lodash.upperfirst": "^4.3.3",
+    "@types/node": "^9.6.4",
+    "@types/pluralize": "^0.0.28",
+    "apollo-client": "^2.2.8",
+    "tslint": "^5.9.1",
+    "tslint-config-airbnb": "^5.8.0",
+    "typescript": "^2.8.1"
+  }
+}
