@@ -188,9 +188,6 @@ Use to configure options or completely override functionality for each AOR reque
 Field|Data Type|Description
 ---|---|---
 `fields`|`string`|Specifies which GraphQL fields should be returned from the request.
-`dataInput`|`string`|GraphQL input type for `data`/`previousData` used for `CREATE`, `UPDATE`, and `DELETE` requests. Changing this value per request would allow you to use `PostCreateInput`, `PostUpdateInput`, and `PostDeleteInput` instead of just `PostInput`.
-`exclude`|`string[]`|Names of fields to be excluded from the Apollo variables. This is useful when AOR's cache includes unwanted fields from your list view, or if you're displaying relational data on the edit page and only need to submit an ID in the input.
-`include`|`string[]`|The opposite of `exclude`. This is useful if an edit page has many readonly fields and you only want to include a few editable fields.
 `formatApolloVariables`|`function (variables: any) : any`|Callback that can be used to override formatting of Apollo variables.
 `sendApolloRequest`|`function (variables: any) : ApolloQueryResult<any>`|Callback that can be used to override sending Apollo request.
 `parseApolloResult`|`function (result: ApolloQueryResult<any>) : any`|Callback that can be used to override parsing Apollo result.
@@ -198,7 +195,6 @@ Field|Data Type|Description
 **Important Notes:**
 * If `fields` are not specified for `CREATE`, `UPDATE`, or `DELETE` requests, `GET_ONE.fields` will be used as a fallback.
 * If `fields` are not specified for `GET_MANY` or `GET_MANY_REFERENCE`, `GET_LIST.fields` will be used as a fallback.
-* If both `exclude` and `include` are configured for a request, `exclude` will take priority.
 
 #### Mutation Config
 
@@ -206,9 +202,15 @@ Use to configure options for a mutation request (`CREATE`, `UPDATE`, `DELETE`):
 
 Field|Data Type|Description
 ---|---|---
+`dataInput`|`string`|GraphQL input type for `data`/`previousData`. Changing this value per request would allow you to use `PostCreateInput`, `PostUpdateInput`, and `PostDeleteInput` instead of just `PostInput`.
+`exclude`|`string[]`|Names of fields to be excluded from the Apollo variables. This is useful when AOR's cache includes unwanted fields from your list view, or if you're displaying relational data on the edit page and only need to submit an ID in the input.
+`include`|`string[]`|The opposite of `exclude`. This is useful if an edit page has many readonly fields and you only want to include a few editable fields.
 `mutation`|`string \| DocumentNode`|Overrides entire `mutation` parameter used in Apollo mutation. If string is provided, AOR Apollo client will parse into standard GraphQL AST for you using [graphql-tag](https://www.npmjs.com/package/graphql-tag).
 `mutationName`|`string`|Overrides only the mutation name when AOR Apollo client builds the mutation.
 `mutationOptions`|`MutationOptions`|Allows you to provide [additional options](https://www.apollographql.com/docs/react/essentials/mutations.html#props) to Apollo mutation.
+
+**Important Notes:**
+* If both `exclude` and `include` are configured for a request, `exclude` will take priority.
 
 #### Query Config
 
