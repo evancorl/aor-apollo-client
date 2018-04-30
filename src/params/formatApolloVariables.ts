@@ -31,7 +31,9 @@ function formatApolloVariables(
   const { primaryKey } = resourceConfig;
 
   switch (requestType) {
-    case RequestType.UPDATE: {
+    case RequestType.CREATE:
+    case RequestType.UPDATE:
+    case RequestType.DELETE: {
       variables = removeApolloTypename(variables);
       variables = {
         ...variables,
