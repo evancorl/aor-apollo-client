@@ -91,15 +91,15 @@ export type RestResponse =
 
 export interface RequestConfig {
   fields?: string;
-  dataInput?: string;
-  exclude?: string[];
-  include?: string[];
   formatApolloVariables?(variables: any): any;
   sendApolloRequest?(variables: any): ApolloQueryResult<any>;
   parseApolloResult?(result: ApolloQueryResult<any>) : any;
 }
 
 export interface MutationConfig extends RequestConfig {
+  dataInput?: string;
+  exclude?: string[];
+  include?: string[];
   mutation?: string | DocumentNode;
   mutationName?: string;
   mutationOptions?: MutationOptions;
