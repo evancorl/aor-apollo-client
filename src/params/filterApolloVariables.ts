@@ -1,6 +1,7 @@
 import omit from 'lodash.omit';
 import pick from 'lodash.pick';
 import {
+  MutationConfig,
   RequestConfig,
   RequestType,
   ResourceConfig,
@@ -15,32 +16,39 @@ function filterApolloVariables(
   let variables = apolloVariables;
 
   switch (requestType) {
+    case RequestType.CREATE:
     case RequestType.UPDATE:
     case RequestType.DELETE: {
+      const { data, previousData } = variables;
+
       // Exclude OR include fields to be submitted to the query/mutation
-      const { exclude = [], include = [] } = requestConfig;
+      const { exclude = [], include = [] } = <MutationConfig>requestConfig;
 
       if (exclude.length) {
         // Exclude fields such as relational data objects (only relational IDs should be submitted)
         variables = {
           ...variables,
-          data: omit(variables.data, exclude),
-          previousData: omit(variables.previousData, exclude),
+          data: omit(data, exclude),
+          previousData: previousData ? omit(previousData, exclude) : undefined,
         };
       } else if (include.length) {
         // Some CRUD forms have many readonly fields. We only want to submit the editable fields
         variables = {
           ...variables,
-          data: pick(variables.data, include),
-          previousData: pick(variables.previousData, include),
+          data: pick(data, include),
+          previousData: previousData ? pick(previousData, include) : undefined,
         };
       }
+    }
+    case RequestType.UPDATE:
+    case RequestType.DELETE: {
+      const { data, previousData } = variables;
 
       // Remove both primary keys from data and previousData
       variables = {
         ...variables,
-        data: omit(variables.data, ['id', resourceConfig.primaryKey]),
-        previousData: omit(variables.previousData, ['id', resourceConfig.primaryKey]),
+        data: omit(data, ['id', resourceConfig.primaryKey]),
+        previousData: omit(previousData, ['id', resourceConfig.primaryKey]),
       };
       break;
     }
